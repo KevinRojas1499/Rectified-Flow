@@ -4,7 +4,7 @@ import torch.nn as nn
 class RectifiedFlow(nn.Module):
 
     def __init__(self, n) -> None:
-        super().__init__()
+        super(RectifiedFlow,self).__init__()
 
         nodes = [64,64,64]
 

@@ -14,7 +14,6 @@ print("Device", device)
 
 
 
-
 state_dict = torch.load("./checkpoints/2dFlow")
 
 flow = model.RectifiedFlow(2).to(device)
@@ -36,7 +35,7 @@ x0 = torch.tensor(generate_samples.get_samples_from_mixed_gaussian(c,means,varia
 x1 = torch.tensor(generate_samples.get_samples_from_mixed_gaussian(c2,means2,variances2,nsamples)).to(device)
 
 
-time = np.linspace(0,1,30)
+time = torch.linspace(0,1,steps=30)
 
 print(time)
 
@@ -44,15 +43,14 @@ sols = []
 
 sols.append(x0.to(device = 'cpu').detach().numpy())
 
+xt = torch.tensor(x0.clone()).to(device=device)
 for t in time:
     
     tt = t*torch.ones((nsamples,1),device = x0.device)
 
-    xt = flow(x0,tt)
+    xt = xt + flow(xt,tt)/30
 
-    xt = xt.to(device = 'cpu').detach().numpy()
-
-    sols.append(xt)
+    sols.append(xt.to(device='cpu').detach().numpy())
 
 sols= np.array(sols)
 
@@ -62,10 +60,10 @@ x0 = x0.to('cpu').detach().numpy()
 
 plt.scatter(x0[:,0],x0[:,1])
 
+xt = xt.to(device='cpu').detach().numpy()
 plt.scatter(xt[:,0],xt[:,1])
-# for trajectory in sols:
-
-#     plt.plot(trajectory[:,0],trajectory[:,1])
+for trajectory in sols:
+    plt.plot(trajectory[:,0],trajectory[:,1])
 
 plt.show()
 

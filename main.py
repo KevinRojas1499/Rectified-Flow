@@ -35,7 +35,6 @@ flow_network = model.RectifiedFlow(2).to(device=device)
 x0 = x0.to(device=device)
 x1 = x1.to(device=device)
 
-
 ############ Training Loop
 train = False
 if train:

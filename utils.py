@@ -2,6 +2,8 @@ import matplotlib.pyplot as plt
 
 import model
 import torch
+
+
 def plot_connection_lines(x0,x1):
     for i in range(x0.shape[0]):
         plt.plot((x0[i,0],x1[i,0]),(x0[i,1],x1[i,1]),color='green')

@@ -14,7 +14,6 @@ def plot_flow(x0,x1):
 
 def simulate_ode(x0, flow_network : model.RectifiedFlow):
     time_steps = 1000
-    print(time_steps)
     h = 1/time_steps
     xt = x0.clone()
     t = torch.ones((x0.shape[0],1),device=x0.device)*h
